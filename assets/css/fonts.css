@@ -1,0 +1,35 @@
+@font-face {
+  font-family: 'saonara';
+  src: url('~assets/fonts/MADESAONARA.woff2') format('woff2'),
+    url('~assets/fonts/MADESAONARA.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Libre Baskerville';
+  src: url('~assets/fonts/LibreBaskerville-Regular.woff2') format('woff2'),
+    url('~assets/fonts/LibreBaskerville-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Libre Baskerville';
+  src: url('~assets/fonts/LibreBaskerville-Bold.woff2') format('woff2'),
+    url('~assets/fonts/LibreBaskerville-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Libre Baskerville';
+  src: url('~assets/fonts/LibreBaskerville-Italic.woff2') format('woff2'),
+    url('~assets/fonts/LibreBaskerville-Italic.woff') format('woff');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}

@@ -1,0 +1,5 @@
+/* ./assets/css/tailwind.css */
+@import '~/assets/css/fonts.css';
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';

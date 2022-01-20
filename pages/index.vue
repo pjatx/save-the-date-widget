@@ -1,0 +1,53 @@
+<template>
+  <div>
+    <div class="py-4 bg-sage overflow-hidden lg:py-8">
+      <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col items-center text-center">
+          <img class="my-8 w-full h-auto" src="~/assets/images/3.svg" alt="" />
+        </div>
+        <div class="text-center">
+          <h1
+            class="mt-24 mb-16 text-3xl text-black sm:text-4xl font-decorative uppercase tracking-widest"
+          >
+            Danielle + Philip
+          </h1>
+          <h2 class="font-decorative text-xl">
+            23 <span class="font-serif italic text-sm px-1">to</span> SEPTEMBER
+            2022
+          </h2>
+          <div class="border-b-black w-8 mx-auto mt-2 mb-3"></div>
+          <p class="font-decorative uppercase text-xs leading-relaxed">
+            Six Senses Duoro Valley<br />Portugal
+          </p>
+          <RSVPIntent class="py-8 m-auto rsvp-intent" />
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import RSVPIntent from '~/components/RSVPIntent.vue'
+
+export default {
+  name: 'IndexPage',
+  components: {
+    RSVPIntent,
+  },
+}
+</script>
+
+<style lang="scss">
+html,
+body,
+#__nuxt,
+#__layout {
+  @apply h-screen;
+}
+
+.border-b-black {
+  border: transparent;
+  border: 2px transparent solid;
+  border-bottom: 2px solid black;
+}
+</style>
