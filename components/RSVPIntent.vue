@@ -348,6 +348,9 @@ export default {
         this.formData.selectedOption === 3
       )
     },
+    endpoint() {
+      return 'https://rsvp-handler.plj.workers.dev'
+    },
   },
   created() {
     this.checkExistingResponse()
@@ -369,7 +372,7 @@ export default {
         const data = JSON.stringify(this.formData)
 
         try {
-          const response = await axios.post(`http://127.0.0.1:8787`, data)
+          const response = await axios.post(this.endpoint, data)
           this.posts = response.data
           // this.$router.push({ path: '/thank-you'})
         } catch (e) {
@@ -385,8 +388,8 @@ export default {
         const dj = JSON.stringify(data)
 
         try {
-          const response = await axios.post(`http://127.0.0.1:8787/lookup`, dj)
-          console.log(response)
+          const response = await axios.post(this.endpoint + '/lookup', dj)
+          // console.log(response)
 
           if (response.data.length > 0) {
             this.existingResponse = response.data
