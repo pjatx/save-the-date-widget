@@ -1,8 +1,7 @@
 <template>
   <div>
     <fieldset>
-      <legend class="sr-only">Server size</legend>
-      <div class="space-y-4 max-w-fit flex-col items-start mx-auto">
+      <div class="space-y-2 max-w-fit flex-col items-start mx-auto">
         <label
           v-for="option in options"
           :key="option.text"
@@ -41,7 +40,10 @@
           </div>
         </label>
       </div>
-      <div class="space-y-4 max-w-fit flex-col items-start mx-auto text-left">
+
+      <div
+        class="space-y-4 max-w-fit flex-col items-start mx-auto text-left mt-12"
+      >
         <div
           v-show="formData.selectedOption != 3 && formData.selectedOption"
           class="px-4 py-5 sm:p-6"
@@ -62,7 +64,7 @@
                       type="text"
                       name="email"
                       autocomplete="email"
-                      class="mt-1 block w-full sm:text-sm border-b-2 border-b-black bg-sage"
+                      class="mt-1 block w-full sm:text-sm border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
                     />
                   </div>
 
@@ -78,7 +80,7 @@
                       type="text"
                       name="street-address"
                       autocomplete="street-address"
-                      class="mt-1 block w-full sm:text-sm border-b-2 border-b-black bg-sage focus:ring-0 focus:border-black"
+                      class="mt-1 block w-full sm:text-sm border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
                     />
                     <p
                       v-if="
@@ -103,7 +105,7 @@
                       type="text"
                       name="street-address-2"
                       autocomplete="street-address-2"
-                      class="mt-1 block w-full sm:text-sm border-b-2 border-b-black bg-sage"
+                      class="mt-1 block w-full sm:text-sm border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
                     />
                   </div>
 
@@ -119,7 +121,7 @@
                       type="text"
                       name="city"
                       autocomplete="address-level2"
-                      class="mt-1 block w-full sm:text-sm border-b-2 border-b-black bg-sage"
+                      class="mt-1 block w-full sm:text-sm border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
                     />
                     <p
                       v-if="
@@ -144,7 +146,7 @@
                       type="text"
                       name="region"
                       autocomplete="address-level1"
-                      class="mt-1 block w-full sm:text-sm border-b-2 border-b-black bg-sage"
+                      class="mt-1 block w-full sm:text-sm border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
                     />
                     <p
                       v-if="
@@ -169,7 +171,7 @@
                       type="text"
                       name="postal-code"
                       autocomplete="postal-code"
-                      class="mt-1 block w-full sm:text-sm border-b-2 border-b-black bg-sage"
+                      class="mt-1 block w-full sm:text-sm border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
                     />
                     <p
                       v-if="
@@ -193,7 +195,7 @@
                       v-model.lazy="$v.formData.country.$model"
                       name="country"
                       autocomplete="country-name"
-                      class="mt-1 block w-full py-2 px-3 border border-b-black focus:outline-none sm:text-sm bg-sage"
+                      class="mt-1 block w-full py-2 px-3 border border-b-black focus:outline-none sm:text-sm bg-sage focus:ring-0 focus:border-none"
                     >
                       <p
                         v-if="
@@ -254,7 +256,6 @@
     <button
       type="button"
       class="w-full inline-flex items-center justify-center my-4 px-4 py-4 border border-transparent text-base font-medium text-white bg-black text-center hover:bg-gray-900 disabled:bg-gray-600"
-      :disabled="!ableToSubmit"
       @click.prevent="submitForm"
     >
       {{
@@ -276,15 +277,15 @@ export default {
       options: [
         {
           number: 1,
-          text: "We're definitely going to make it.",
+          text: 'Count us in!',
         },
         {
           number: 2,
-          text: "We're going to try, but aren't quite sure yet.",
+          text: "We'd love to, but need a little more time.",
         },
         {
           number: 3,
-          text: "Unfortunately, we won't be able to come.",
+          text: "Sadly, we won't be able to make it.",
         },
       ],
       email: null,
@@ -420,8 +421,8 @@ export default {
   border-bottom: 2px solid black;
 
   &:focus {
-    border: 2px solid black;
-    background-color: white;
+    // border: 2px solid black;
+    background-color: lighten(#a1a994, 5%);
   }
 }
 

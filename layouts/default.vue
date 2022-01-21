@@ -1,3 +1,3 @@
 <template>
-  <Nuxt class="h-screen bg-sage" />
+  <Nuxt />
 </template>
