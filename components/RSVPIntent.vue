@@ -1,7 +1,9 @@
 <template>
   <div>
     <fieldset>
-      <div class="space-y-2 max-w-fit flex-col items-start mx-auto">
+      <div
+        class="space-y-2 max-w-fit flex-col items-start mx-auto options-container"
+      >
         <label
           v-for="option in options"
           :key="option.text"
@@ -28,10 +30,9 @@
             </div>
             <div class="text-sm">
               <p
-                id="server-size-1-label"
-                class="font-medium text-gray-900 leading-3"
+                class="rsvp-option font-medium text-gray-900 leading-3"
                 :class="{
-                  'text-black': formData.selectedOption == option.number,
+                  active: formData.selectedOption == option.number,
                 }"
               >
                 {{ option.text }}
@@ -39,20 +40,28 @@
             </div>
           </div>
         </label>
+        <p
+          v-if="
+            ($v.formData.selectedOption.$invalid &&
+              $v.formData.selectedOption.$dirty) ||
+            (uiState === 'submit clicked' &&
+              $v.formData.selectedOption.$invalid)
+          "
+          class="text-red-700 text-sm mt-2"
+        >
+          This field is required.
+        </p>
       </div>
 
       <div
         class="space-y-4 max-w-fit flex-col items-start mx-auto text-left mt-12"
       >
-        <div
-          v-show="formData.selectedOption != 3 && formData.selectedOption"
-          class="px-4 py-5 sm:p-6"
-        >
+        <div class="px-4 py-5 sm:p-6">
           <div class="md:grid md:grid-cols-2 md:gap-6">
             <div class="mt-5 md:mt-0 md:col-span-2">
               <form action="#" method="POST">
                 <div class="grid grid-cols-6 gap-6">
-                  <div v-show="!$route.query.email" class="col-span-12">
+                  <div class="col-span-12">
                     <label
                       for="street-address"
                       class="block text-sm font-medium text-black"
@@ -60,12 +69,23 @@
                     >
                     <input
                       id="email"
-                      v-model="email"
+                      v-model="$v.formData.email.$model"
                       type="text"
                       name="email"
                       autocomplete="email"
                       class="mt-1 block w-full sm:text-sm border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
                     />
+                    <p
+                      v-if="
+                        ($v.formData.email.$invalid &&
+                          $v.formData.email.$dirty) ||
+                        (uiState === 'submit clicked' &&
+                          $v.formData.email.$invalid)
+                      "
+                      class="text-red-700 text-sm mt-2"
+                    >
+                      This field is required.
+                    </p>
                   </div>
 
                   <div class="col-span-12">
@@ -76,7 +96,7 @@
                     >
                     <input
                       id="street-address"
-                      v-model.lazy="$v.formData.streetAddress.$model"
+                      v-model="formData.streetAddress"
                       type="text"
                       name="street-address"
                       autocomplete="street-address"
@@ -84,10 +104,12 @@
                     />
                     <p
                       v-if="
-                        !$v.formData.streetAddress.required &&
-                        $v.formData.streetAddress.$dirty
+                        ($v.formData.streetAddress.$invalid &&
+                          $v.formData.streetAddress.$dirty) ||
+                        (uiState === 'submit clicked' &&
+                          $v.formData.streetAddress.$invalid)
                       "
-                      class="text-red-600"
+                      class="text-red-700 text-sm mt-2"
                     >
                       This field is required.
                     </p>
@@ -101,7 +123,7 @@
                     >
                     <input
                       id="street-address-2"
-                      v-model.lazy="$v.formData.streetAddress2.$model"
+                      v-model="$v.formData.streetAddress2.$model"
                       type="text"
                       name="street-address-2"
                       autocomplete="street-address-2"
@@ -117,7 +139,7 @@
                     >
                     <input
                       id="city"
-                      v-model.lazy="$v.formData.city.$model"
+                      v-model="$v.formData.city.$model"
                       type="text"
                       name="city"
                       autocomplete="address-level2"
@@ -125,10 +147,12 @@
                     />
                     <p
                       v-if="
-                        !$v.formData.city.required &&
-                        $v.formData.streetAddress.$dirty
+                        ($v.formData.city.$invalid &&
+                          $v.formData.city.$dirty) ||
+                        (uiState === 'submit clicked' &&
+                          $v.formData.city.$invalid)
                       "
-                      class="text-red-600"
+                      class="text-red-700 text-sm mt-2"
                     >
                       This field is required.
                     </p>
@@ -142,7 +166,7 @@
                     >
                     <input
                       id="region"
-                      v-model.lazy="$v.formData.region.$model"
+                      v-model="$v.formData.region.$model"
                       type="text"
                       name="region"
                       autocomplete="address-level1"
@@ -150,10 +174,12 @@
                     />
                     <p
                       v-if="
-                        !$v.formData.region.required &&
-                        $v.formData.streetAddress.$dirty
+                        ($v.formData.region.$invalid &&
+                          $v.formData.region.$dirty) ||
+                        (uiState === 'submit clicked' &&
+                          $v.formData.region.$invalid)
                       "
-                      class="text-red-600"
+                      class="text-red-700 text-sm mt-2"
                     >
                       This field is required.
                     </p>
@@ -167,7 +193,7 @@
                     >
                     <input
                       id="postal-code"
-                      v-model.lazy="$v.formData.postalCode.$model"
+                      v-model="$v.formData.postalCode.$model"
                       type="text"
                       name="postal-code"
                       autocomplete="postal-code"
@@ -175,10 +201,12 @@
                     />
                     <p
                       v-if="
-                        !$v.formData.postalCode.required &&
-                        $v.formData.streetAddress.$dirty
+                        ($v.formData.postalCode.$invalid &&
+                          $v.formData.postalCode.$dirty) ||
+                        (uiState === 'submit clicked' &&
+                          $v.formData.postalCode.$invalid)
                       "
-                      class="text-red-600"
+                      class="text-red-700 text-sm mt-2"
                     >
                       This field is required.
                     </p>
@@ -192,24 +220,26 @@
                     >
                     <select
                       id="country"
-                      v-model.lazy="$v.formData.country.$model"
+                      v-model="$v.formData.country.$model"
                       name="country"
                       autocomplete="country-name"
                       class="mt-1 block w-full py-2 px-3 border border-b-black focus:outline-none sm:text-sm bg-sage focus:ring-0 focus:border-none"
                     >
-                      <p
-                        v-if="
-                          !$v.formData.country.required &&
-                          $v.formData.streetAddress.$dirty
-                        "
-                        class="text-red-600"
-                      >
-                        This field is required.
-                      </p>
                       <option :value="null" disabled>Select Country</option>
                       <option>United States</option>
                       <option>Germany</option>
                     </select>
+                    <p
+                      v-if="
+                        ($v.formData.country.$invalid &&
+                          $v.formData.country.$dirty) ||
+                        (uiState === 'submit clicked' &&
+                          $v.formData.country.$invalid)
+                      "
+                      class="text-red-700 text-sm mt-2"
+                    >
+                      This field is required.
+                    </p>
                   </div>
                 </div>
               </form>
@@ -219,7 +249,7 @@
 
         <div class="submit-container">
           <div
-            v-if="(formTouched && uiState === 'submit clicked') || errors"
+            v-if="uiState === 'submit clicked' && $v.$invalid"
             class="rounded-md bg-red-200 p-4"
           >
             <div class="flex">
@@ -241,27 +271,31 @@
 
               <div class="ml-3">
                 <div class="text-sm text-red-800">
-                  <p v-if="errors">The form above has errors</p>
-                  <p v-else-if="formTouched && uiState === 'submit clicked'">
-                    Looks like the form is empty! Please fill out the required
-                    fields and try again.
+                  <p>
+                    Oops! Looks like you missed something above. Make sure you
+                    filled out the whole form.
                   </p>
                 </div>
               </div>
             </div>
           </div>
+          <button
+            type="button"
+            class="w-full inline-flex items-center justify-center my-4 px-4 py-4 border border-transparent text-base font-medium text-white bg-black text-center hover:bg-gray-900"
+            :class="{
+              'bg-gray-600 text-black hover:bg-gray-600': !ableToSubmit,
+            }"
+            @click.prevent="submitForm"
+          >
+            {{
+              ableToSubmit
+                ? 'Submit'
+                : 'Please fill out the requested information'
+            }}
+          </button>
         </div>
       </div>
     </fieldset>
-    <button
-      type="button"
-      class="w-full inline-flex items-center justify-center my-4 px-4 py-4 border border-transparent text-base font-medium text-white bg-black text-center hover:bg-gray-900 disabled:bg-gray-600"
-      @click.prevent="submitForm"
-    >
-      {{
-        ableToSubmit ? 'Submit' : 'Please fill out the requested information'
-      }}
-    </button>
   </div>
 </template>
 
@@ -288,7 +322,6 @@ export default {
           text: "Sadly, we won't be able to make it.",
         },
       ],
-      email: null,
       formData: {
         // selectedOption: 1,
         // streetAddress: '2310 Indian Trl',
@@ -298,6 +331,7 @@ export default {
         // postalCode: '78703',
         // country: 'United States'
         selectedOption: null,
+        email: null,
         streetAddress: null,
         streetAddress2: null,
         city: null,
@@ -312,27 +346,37 @@ export default {
     formData: {
       selectedOption: {
         required,
+        $autoDirty: true,
+      },
+      email: {
+        required,
+        $autoDirty: true,
       },
       streetAddress: {
         required,
         minLength: minLength(2),
+        $autoDirty: true,
       },
       streetAddress2: {},
       city: {
         required,
         minLength: minLength(2),
+        $autoDirty: true,
       },
       region: {
         required,
         minLength: minLength(2),
+        $autoDirty: true,
       },
       postalCode: {
         required,
         minLength: minLength(2),
+        $autoDirty: true,
       },
       country: {
         required,
         minLength: minLength(2),
+        $autoDirty: true,
       },
     },
   },
@@ -344,10 +388,7 @@ export default {
       return this.$v.formData.$anyError
     },
     ableToSubmit() {
-      return (
-        (!this.errors && !this.$v.$invalid) ||
-        this.formData.selectedOption === 3
-      )
+      return !this.errors && !this.$v.$invalid
     },
     endpoint() {
       return 'https://rsvp-handler.plj.workers.dev'
@@ -362,20 +403,15 @@ export default {
     },
     async submitForm() {
       this.uiState = 'submit clicked'
-      if (this.errors === false && this.formTouched === false) {
+      if (this.$v.$invalid === false) {
         // this is where you send the responses
-
-        const formData = this.formData
-        formData.email = this.$route.query.email
-          ? this.$route.query.email
-          : this.email
 
         const data = JSON.stringify(this.formData)
 
         try {
           const response = await axios.post(this.endpoint, data)
           this.posts = response.data
-          // this.$router.push({ path: '/thank-you'})
+          this.$router.push({ path: '/thank-you' })
         } catch (e) {
           this.errors.push(e)
         }
@@ -385,6 +421,7 @@ export default {
     },
     async checkExistingResponse() {
       if (this.$route.query.email) {
+        this.formData.email = this.$route.query.email
         const data = { email: this.$route.query.email }
         const dj = JSON.stringify(data)
 
@@ -413,6 +450,16 @@ export default {
   &.active {
     @apply block;
   }
+}
+
+.rsvp-option {
+  &.active {
+    font-weight: bold;
+  }
+}
+
+.options-container {
+  min-width: 386px;
 }
 
 .border-b-black {
