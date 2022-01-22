@@ -4,7 +4,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'save-the-date',
+    title: 'Danielle & Philip | Save the Date',
     htmlAttrs: {
       lang: 'en',
     },
