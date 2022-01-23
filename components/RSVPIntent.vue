@@ -439,44 +439,53 @@ export default {
       selectedOption: {
         required,
         $autoDirty: true,
+        $lazy: true,
       },
       email: {
         required,
         $autoDirty: true,
+        $lazy: true,
         email,
       },
       firstName: {
         required,
         $autoDirty: true,
+        $lazy: true,
       },
       lastName: {
         required,
         $autoDirty: true,
+        $lazy: true,
       },
       streetAddress: {
         required,
         minLength: minLength(2),
+        $lazy: true,
         $autoDirty: true,
       },
       streetAddress2: {},
       city: {
         required,
         minLength: minLength(2),
+        $lazy: true,
         $autoDirty: true,
       },
       region: {
         required,
         minLength: minLength(2),
+        $lazy: true,
         $autoDirty: true,
       },
       postalCode: {
         required,
         minLength: minLength(2),
+        $lazy: true,
         $autoDirty: true,
       },
       country: {
         required,
         minLength: minLength(2),
+        $lazy: true,
         $autoDirty: true,
       },
     },
