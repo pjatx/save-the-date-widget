@@ -1,62 +1,62 @@
 <template>
   <div>
-    <fieldset>
-      <div
-        class="space-y-2 max-w-fit flex-col items-start mx-auto options-container"
-      >
-        <label
-          v-for="option in options"
-          :key="option.text"
-          class="relative block px-6 py-4 cursor-pointer sm:flex sm:justify-between focus:outline-none"
-          @click="selectOption(option)"
+    <form data-form-type="contact">
+      <fieldset>
+        <div
+          class="space-y-2 max-w-fit flex-col items-start mx-auto options-container"
         >
-          <input
-            type="radio"
-            name="server-size"
-            value="Startup"
-            class="sr-only"
-            aria-labelledby="server-size-1-label"
-            aria-describedby="server-size-1-description-0 server-size-1-description-1"
-          />
-          <div class="flex items-end min-h-30 font-serif">
-            <div
-              class="w-8 border-b-2 border-b-black h-full mr-2 relative flex justify-center"
-            >
-              <span
-                class="response text-lg font-bold"
-                :class="{ active: formData.selectedOption == option.number }"
-                >X</span
+          <label
+            v-for="option in options"
+            :key="option.text"
+            class="relative block px-6 py-4 cursor-pointer sm:flex sm:justify-between focus:outline-none"
+            @click="selectOption(option)"
+          >
+            <input
+              type="radio"
+              name="server-size"
+              value="Startup"
+              class="sr-only"
+              aria-labelledby="server-size-1-label"
+              aria-describedby="server-size-1-description-0 server-size-1-description-1"
+            />
+            <div class="flex items-end min-h-30 font-serif">
+              <div
+                class="w-8 border-b-2 border-b-black h-full mr-2 relative flex justify-center"
               >
+                <span
+                  class="response text-lg font-bold"
+                  :class="{ active: formData.selectedOption == option.number }"
+                  >X</span
+                >
+              </div>
+              <div class="text-sm">
+                <p
+                  class="rsvp-option font-medium text-gray-900 leading-3"
+                  :class="{
+                    active: formData.selectedOption == option.number,
+                  }"
+                >
+                  {{ option.text }}
+                </p>
+              </div>
             </div>
-            <div class="text-sm">
-              <p
-                class="rsvp-option font-medium text-gray-900 leading-3"
-                :class="{
-                  active: formData.selectedOption == option.number,
-                }"
-              >
-                {{ option.text }}
-              </p>
-            </div>
-          </div>
-        </label>
-        <p
-          v-if="
-            ($v.formData.selectedOption.$invalid &&
-              $v.formData.selectedOption.$dirty) ||
-            (uiState === 'submit clicked' &&
-              $v.formData.selectedOption.$invalid)
-          "
-          class="text-red-700 text-sm mt-2"
-        >
-          This field is required.
-        </p>
-      </div>
+          </label>
+          <p
+            v-if="
+              ($v.formData.selectedOption.$invalid &&
+                $v.formData.selectedOption.$dirty) ||
+              (uiState === 'submit clicked' &&
+                $v.formData.selectedOption.$invalid)
+            "
+            class="text-red-700 text-sm mt-2"
+          >
+            This field is required.
+          </p>
+        </div>
 
-      <div class="space-y-4 flex-col items-start mx-auto text-left mt-12">
-        <div class="px-4 py-5 sm:p-6">
-          <div class="mt-5 md:mt-0">
-            <form action="#" method="POST">
+        <div class="space-y-4 flex-col items-start mx-auto text-left mt-12">
+          <div class="px-4 py-5 sm:p-6">
+            <div class="mt-5 md:mt-0">
               <div class="grid grid-cols-12 gap-6">
                 <div class="col-span-12">
                   <label
@@ -295,91 +295,91 @@
                   </p>
                 </div>
               </div>
-            </form>
+            </div>
           </div>
-        </div>
 
-        <div class="submit-container">
-          <div
-            v-if="uiState === 'submit clicked' && $v.$invalid"
-            class="rounded-md bg-red-200 p-4"
-          >
-            <div class="flex">
-              <div class="flex-shrink-0">
-                <svg
-                  class="h-5 w-5 text-red-800"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-              </div>
+          <div class="submit-container">
+            <div
+              v-if="uiState === 'submit clicked' && $v.$invalid"
+              class="rounded-md bg-red-200 p-4"
+            >
+              <div class="flex">
+                <div class="flex-shrink-0">
+                  <svg
+                    class="h-5 w-5 text-red-800"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </div>
 
-              <div class="ml-3">
-                <div class="text-sm text-red-800">
-                  <p>
-                    Oops! Looks like you missed something above. Make sure you
-                    filled out the whole form.
-                  </p>
+                <div class="ml-3">
+                  <div class="text-sm text-red-800">
+                    <p>
+                      Oops! Looks like you missed something above. Make sure you
+                      filled out the whole form.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <button
-            v-if="!isLoading"
-            type="button"
-            class="w-full inline-flex items-center justify-center my-4 px-4 py-4 border border-transparent text-base font-medium text-white bg-black text-center hover:bg-gray-900"
-            :class="{
-              'bg-gray-600 text-black hover:bg-gray-600': !ableToSubmit,
-            }"
-            :loading="isLoading"
-            @click.prevent="submitForm"
-          >
-            {{
-              ableToSubmit
-                ? 'Submit'
-                : 'Please fill out the requested information'
-            }}
-          </button>
-          <button
-            v-else
-            type="button"
-            class="w-full inline-flex items-center justify-center my-4 px-4 py-4 border border-transparent text-base font-medium bg-black text-white"
-            :loading="isLoading"
-            disabled
-            @click.prevent="submitForm"
-          >
-            <svg
-              class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
+            <button
+              v-if="!isLoading"
+              type="button"
+              class="w-full inline-flex items-center justify-center my-4 px-4 py-4 border border-transparent text-base font-medium text-white bg-black text-center hover:bg-gray-900"
+              :class="{
+                'bg-gray-600 text-black hover:bg-gray-600': !ableToSubmit,
+              }"
+              :loading="isLoading"
+              @click.prevent="submitForm"
             >
-              <circle
-                class="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                stroke-width="4"
-              ></circle>
-              <path
-                class="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              ></path>
-            </svg>
-            Processing...
-          </button>
+              {{
+                ableToSubmit
+                  ? 'Submit'
+                  : 'Please fill out the requested information'
+              }}
+            </button>
+            <button
+              v-else
+              type="button"
+              class="w-full inline-flex items-center justify-center my-4 px-4 py-4 border border-transparent text-base font-medium bg-black text-white"
+              :loading="isLoading"
+              disabled
+              @click.prevent="submitForm"
+            >
+              <svg
+                class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  class="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                ></circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+              Processing...
+            </button>
+          </div>
         </div>
-      </div>
-    </fieldset>
+      </fieldset>
+    </form>
   </div>
 </template>
 
@@ -401,7 +401,7 @@ export default {
         },
         {
           number: 2,
-          text: "We'd love to, but need a little more time.",
+          text: "We'd love to, but need a little more time to decide.",
         },
         {
           number: 3,
