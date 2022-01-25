@@ -3,7 +3,11 @@
     <div class="py-4 overflow-hidden lg:py-8 h-full font-decorative">
       <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col items-center text-center">
-          <img class="my-8 w-full h-auto" src="~/assets/images/3.svg" alt="" />
+          <img
+            class="my-8 w-full h-auto"
+            src="~/assets/images/illustration.svg"
+            alt=""
+          />
         </div>
         <div class="text-center">
           <h1
@@ -12,7 +16,7 @@
             Danielle + Philip
           </h1>
           <h2 class="font-decorative text-xl">
-            24 <span class="font-serif italic text-sm px-1">to</span> SEPTEMBER
+            24 <span class="font-serif italic text-sm px-1">of</span> SEPTEMBER
             2022
           </h2>
           <div class="border-b-black w-8 mx-auto mt-2 mb-3"></div>
@@ -23,7 +27,7 @@
             <h2 class="text-xl font-bold">
               Please let us know if you think you can make it
             </h2>
-            <p class="italic text-sm">
+            <p class="italic text-base">
               We know traveling to Portugal is not a small ask! We're trying to
               gauge how many are considering the journey.
             </p>

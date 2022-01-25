@@ -1,5 +1,4 @@
 module.exports = {
-  mode: 'jit',
   purge: [
     './components/**/*.{vue,js}',
     './layouts/**/*.vue',
@@ -24,7 +23,8 @@ module.exports = {
   variants: {
     extend: {
       opacity: ['disabled'],
+      borderColor: ['autofill', 'dark'],
     },
   },
-  plugins: [require('@tailwindcss/forms')],
+  plugins: [require('@tailwindcss/forms'), require('tailwindcss-autofill')],
 }

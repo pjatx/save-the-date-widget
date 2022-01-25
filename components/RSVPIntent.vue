@@ -31,7 +31,7 @@
               </div>
               <div class="text-sm">
                 <p
-                  class="rsvp-option font-medium text-gray-900 leading-3"
+                  class="rsvp-option font-medium text-gray-900 leading-4 text-left"
                   :class="{
                     active: formData.selectedOption == option.number,
                   }"
@@ -70,7 +70,7 @@
                     type="text"
                     name="email"
                     autocomplete="email"
-                    class="mt-1 block w-full sm:text-sm border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
+                    class="mt-1 block w-full sm:text-sm border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none autofill:bg-red-500"
                     @blur="checkExistingGuest()"
                   />
                   <p
@@ -443,17 +443,16 @@ export default {
       },
       email: {
         required,
-        $autoDirty: true,
+        minLength: minLength(2),
         $lazy: true,
+        $autoDirty: true,
         email,
       },
       firstName: {
-        required,
         $autoDirty: true,
         $lazy: true,
       },
       lastName: {
-        required,
         $autoDirty: true,
         $lazy: true,
       },
@@ -466,7 +465,6 @@ export default {
       streetAddress2: {},
       city: {
         required,
-        minLength: minLength(2),
         $lazy: true,
         $autoDirty: true,
       },
@@ -484,7 +482,6 @@ export default {
       },
       country: {
         required,
-        minLength: minLength(2),
         $lazy: true,
         $autoDirty: true,
       },
@@ -498,8 +495,8 @@ export default {
       return !this.errors && !this.$v.$invalid
     },
     endpoint() {
-      return 'https://rsvp-handler.plj.workers.dev'
-      // return 'http://127.0.0.1:8787'
+      // return 'https://rsvp-handler.plj.workers.dev'
+      return 'http://127.0.0.1:8787'
     },
   },
   created() {
