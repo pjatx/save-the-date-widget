@@ -11,27 +11,28 @@
         </div>
         <div class="text-center">
           <h1
-            class="mt-24 mb-12 text-3xl text-black sm:text-4xl tracking-widest"
+            class="mt-24 mb-12 text-4xl text-black sm:text-4xl tracking-widest"
           >
-            Danielle + Philip
+            Danielle & Philip
           </h1>
           <h2 class="font-decorative text-xl">
-            24 <span class="font-serif italic text-sm px-1">of</span> SEPTEMBER
+            24
+            <span class="font-serif italic text-base px-1">of</span> SEPTEMBER
             2022
           </h2>
           <div class="border-b-black w-8 mx-auto mt-2 mb-3"></div>
-          <p class="font-decorative uppercase text-xs leading-relaxed">
+          <p class="font-decorative uppercase text-sm leading-relaxed">
             Douro Valley<br />Portugal
           </p>
           <div class="mt-16">
-            <h2 class="text-xl font-bold">
+            <h2 class="text-2xl font-bold">
               Please let us know if you think you can make it
             </h2>
-            <p class="italic text-base">
-              We know traveling to Portugal is not a small ask! We're trying to
-              gauge how many are considering the journey.
+            <p class="italic text-lg">
+              We know traveling to Portugal is not a small ask! <br />We're
+              trying to gauge how many are considering the journey.
             </p>
-            <p class="mt-8 text-sm font-bold font-serif">
+            <p class="mt-8 text-base font-bold font-serif">
               (This is not an official RSVP)
             </p>
           </div>

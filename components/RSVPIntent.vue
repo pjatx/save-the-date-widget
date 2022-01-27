@@ -29,7 +29,7 @@
                   >X</span
                 >
               </div>
-              <div class="text-sm">
+              <div class="text-base">
                 <p
                   class="rsvp-option font-medium text-gray-900 leading-4 text-left"
                   :class="{
@@ -49,7 +49,7 @@
             (uiState === 'submit clicked' &&
               $v.formData.selectedOption.$invalid)
           "
-          class="text-red-700 text-sm mt-2"
+          class="text-red-700 text-base mt-2"
         >
           This field is required.
         </p>
@@ -62,24 +62,24 @@
               <div class="col-span-12">
                 <label
                   for="street-address"
-                  class="block text-sm font-medium text-black"
+                  class="block text-base font-medium text-black"
                   >Email</label
                 >
                 <input
                   id="email"
-                  v-model="$v.formData.email.$model"
+                  v-model="formData.email"
                   type="text"
                   name="email"
                   autocomplete="email"
-                  class="mt-1 block w-full sm:text-sm border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none autofill:bg-red-500"
-                  @blur="checkExistingGuest()"
+                  class="mt-1 block w-full sm:text-base border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none autofill:bg-red-500"
+                  @blur="handleEmail()"
                 />
                 <p
                   v-if="
                     ($v.formData.email.$invalid && $v.formData.email.$dirty) ||
                     (uiState === 'submit clicked' && $v.formData.email.$invalid)
                   "
-                  class="text-red-700 text-sm mt-2"
+                  class="text-red-700 text-base mt-2"
                 >
                   This field is required.
                 </p>
@@ -89,28 +89,17 @@
                 v-show="existingGuest === false"
                 class="col-span-12 sm:col-span-6"
               >
-                <label for="city" class="block text-sm font-medium text-black"
+                <label for="city" class="block text-base font-medium text-black"
                   >First Name</label
                 >
                 <input
                   id="firstName"
-                  v-model="$v.formData.firstName.$model"
+                  v-model="formData.firstName"
                   type="text"
                   name="firstName"
                   autocomplete="given-name"
-                  class="mt-1 block w-full sm:text-sm border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
+                  class="mt-1 block w-full sm:text-base border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
                 />
-                <p
-                  v-if="
-                    ($v.formData.firstName.$invalid &&
-                      $v.formData.firstName.$dirty) ||
-                    (uiState === 'submit clicked' &&
-                      $v.formData.firstName.$invalid)
-                  "
-                  class="text-red-700 text-sm mt-2"
-                >
-                  This field is required.
-                </p>
               </div>
 
               <div
@@ -119,34 +108,23 @@
               >
                 <label
                   for="lastName"
-                  class="block text-sm font-medium text-black"
+                  class="block text-base font-medium text-black"
                   >Last Name</label
                 >
                 <input
                   id="lastName"
-                  v-model="$v.formData.lastName.$model"
+                  v-model="formData.lastName"
                   type="text"
                   name="lastName"
                   autocomplete="family-name"
-                  class="mt-1 block w-full sm:text-sm border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
+                  class="mt-1 block w-full sm:text-base border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
                 />
-                <p
-                  v-if="
-                    ($v.formData.lastName.$invalid &&
-                      $v.formData.lastName.$dirty) ||
-                    (uiState === 'submit clicked' &&
-                      $v.formData.lastName.$invalid)
-                  "
-                  class="text-red-700 text-sm mt-2"
-                >
-                  This field is required.
-                </p>
               </div>
 
               <div class="col-span-12">
                 <label
                   for="street-address"
-                  class="block text-sm font-medium text-black"
+                  class="block text-base font-medium text-black"
                   >Street address</label
                 >
                 <input
@@ -155,7 +133,8 @@
                   type="text"
                   name="street-address"
                   autocomplete="street-address"
-                  class="mt-1 block w-full sm:text-sm border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
+                  class="mt-1 block w-full sm:text-base border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
+                  @blur="$v.formData.streetAddress.$touch()"
                 />
                 <p
                   v-if="
@@ -164,7 +143,7 @@
                     (uiState === 'submit clicked' &&
                       $v.formData.streetAddress.$invalid)
                   "
-                  class="text-red-700 text-sm mt-2"
+                  class="text-red-700 text-base mt-2"
                 >
                   This field is required.
                 </p>
@@ -173,53 +152,57 @@
               <div class="col-span-12">
                 <label
                   for="street-address-2"
-                  class="block text-sm font-medium text-black"
+                  class="block text-base font-medium text-black"
                   >Street address 2</label
                 >
                 <input
                   id="street-address-2"
-                  v-model="$v.formData.streetAddress2.$model"
+                  v-model="formData.streetAddress2"
                   type="text"
                   name="street-address-2"
                   autocomplete="street-address-2"
-                  class="mt-1 block w-full sm:text-sm border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
+                  class="mt-1 block w-full sm:text-base border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
                 />
               </div>
 
               <div class="col-span-12 lg:col-span-4">
-                <label for="city" class="block text-sm font-medium text-black"
+                <label for="city" class="block text-base font-medium text-black"
                   >City</label
                 >
                 <input
                   id="city"
-                  v-model="$v.formData.city.$model"
+                  v-model="formData.city"
                   type="text"
                   name="city"
                   autocomplete="address-level2"
-                  class="mt-1 block w-full sm:text-sm border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
+                  class="mt-1 block w-full sm:text-base border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
+                  @blur="$v.formData.city.$touch()"
                 />
                 <p
                   v-if="
                     ($v.formData.city.$invalid && $v.formData.city.$dirty) ||
                     (uiState === 'submit clicked' && $v.formData.city.$invalid)
                   "
-                  class="text-red-700 text-sm mt-2"
+                  class="text-red-700 text-base mt-2"
                 >
                   This field is required.
                 </p>
               </div>
 
               <div class="col-span-12 sm:col-span-6 lg:col-span-4">
-                <label for="region" class="block text-sm font-medium text-black"
+                <label
+                  for="region"
+                  class="block text-base font-medium text-black"
                   >State / Province</label
                 >
                 <input
                   id="region"
-                  v-model="$v.formData.region.$model"
+                  v-model="formData.region"
                   type="text"
                   name="region"
                   autocomplete="address-level1"
-                  class="mt-1 block w-full sm:text-sm border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
+                  class="mt-1 block w-full sm:text-base border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
+                  @blur="$v.formData.region.$touch()"
                 />
                 <p
                   v-if="
@@ -228,7 +211,7 @@
                     (uiState === 'submit clicked' &&
                       $v.formData.region.$invalid)
                   "
-                  class="text-red-700 text-sm mt-2"
+                  class="text-red-700 text-base mt-2"
                 >
                   This field is required.
                 </p>
@@ -237,16 +220,17 @@
               <div class="col-span-12 sm:col-span-6 lg:col-span-4">
                 <label
                   for="postal-code"
-                  class="block text-sm font-medium text-black"
+                  class="block text-base font-medium text-black"
                   >ZIP / Postal code</label
                 >
                 <input
                   id="postal-code"
-                  v-model="$v.formData.postalCode.$model"
+                  v-model="formData.postalCode"
                   type="text"
                   name="postal-code"
                   autocomplete="postal-code"
-                  class="mt-1 block w-full sm:text-sm border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
+                  class="mt-1 block w-full sm:text-base border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
+                  @blur="$v.formData.postalCode.$touch()"
                 />
                 <p
                   v-if="
@@ -255,7 +239,7 @@
                     (uiState === 'submit clicked' &&
                       $v.formData.postalCode.$invalid)
                   "
-                  class="text-red-700 text-sm mt-2"
+                  class="text-red-700 text-base mt-2"
                 >
                   This field is required.
                 </p>
@@ -264,7 +248,7 @@
               <div class="col-span-12">
                 <label
                   for="country"
-                  class="block text-sm font-medium text-black"
+                  class="block text-base font-medium text-black"
                   >Country</label
                 >
                 <select
@@ -272,7 +256,7 @@
                   v-model="$v.formData.country.$model"
                   name="country"
                   autocomplete="country-name"
-                  class="mt-1 block w-full py-2 px-3 border border-b-black focus:outline-none sm:text-sm bg-sage focus:ring-0 focus:border-none"
+                  class="mt-1 block w-full py-2 px-3 border border-b-black focus:outline-none sm:text-base bg-sage focus:ring-0 focus:border-none"
                 >
                   <option :value="null" disabled>Select Country</option>
                   <option>United States</option>
@@ -285,7 +269,7 @@
                     (uiState === 'submit clicked' &&
                       $v.formData.country.$invalid)
                   "
-                  class="text-red-700 text-sm mt-2"
+                  class="text-red-700 text-base mt-2"
                 >
                   This field is required.
                 </p>
@@ -317,7 +301,7 @@
               </div>
 
               <div class="ml-3">
-                <div class="text-sm text-red-800">
+                <div class="text-base text-red-800">
                   <p>
                     Oops! Looks like you missed something above. Make sure you
                     filled out the whole form.
@@ -500,6 +484,10 @@ export default {
     }
   },
   methods: {
+    handleEmail() {
+      this.$v.formData.email.$touch()
+      this.checkExistingGuest()
+    },
     selectOption(option) {
       this.formData.selectedOption = option.number
     },
