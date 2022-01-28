@@ -41,7 +41,7 @@
                   </div>
                   <div class="text-base">
                     <p
-                      class="rsvp-option font-medium text-gray-900 leading-4 text-left"
+                      class="rsvp-option font-medium text-gray-900 md:leading-4 text-left"
                       :class="{
                         active: formData.selectedOption == option.number,
                       }"
@@ -400,10 +400,6 @@ export default {
   }
 }
 
-.options-container {
-  min-width: 507px;
-}
-
 .border-b-black {
   border: transparent;
   border: 2px transparent solid;
@@ -417,9 +413,5 @@ export default {
 
 .min-h-64 {
   min-height: 64px;
-}
-
-.max-w-fit {
-  max-width: fit-content;
 }
 </style>
