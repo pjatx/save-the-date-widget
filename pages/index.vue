@@ -5,7 +5,7 @@
         <div class="flex flex-col items-center text-center">
           <img
             class="my-8 w-full h-auto"
-            src="~/assets/images/illustration.svg"
+            src="~/assets/images/illustration-2.svg"
             alt=""
           />
         </div>

@@ -1,62 +1,58 @@
 <template>
   <div>
-    <form data-form-type="contact">
-      <div
-        class="space-y-2 max-w-fit flex-col items-start mx-auto options-container"
-      >
-        <fieldset>
-          <label
-            v-for="option in options"
-            :key="option.text"
-            class="relative block px-6 py-4 cursor-pointer sm:flex sm:justify-between focus:outline-none"
-            @click="selectOption(option)"
-          >
-            <input
-              type="radio"
-              name="server-size"
-              value="Startup"
-              class="sr-only"
-              aria-labelledby="server-size-1-label"
-              aria-describedby="server-size-1-description-0 server-size-1-description-1"
-            />
-            <div class="flex items-end min-h-30 font-serif">
-              <div
-                class="w-8 border-b-2 border-b-black h-full mr-2 relative flex justify-center"
-              >
-                <span
-                  class="response text-lg font-bold"
-                  :class="{ active: formData.selectedOption == option.number }"
-                  >X</span
-                >
-              </div>
-              <div class="text-base">
-                <p
-                  class="rsvp-option font-medium text-gray-900 leading-4 text-left"
-                  :class="{
-                    active: formData.selectedOption == option.number,
-                  }"
-                >
-                  {{ option.text }}
-                </p>
-              </div>
-            </div>
-          </label>
-        </fieldset>
-        <p
-          v-if="
-            ($v.formData.selectedOption.$invalid &&
-              $v.formData.selectedOption.$dirty) ||
-            (uiState === 'submit clicked' &&
-              $v.formData.selectedOption.$invalid)
-          "
-          class="text-red-700 text-base mt-2"
-        >
-          This field is required.
-        </p>
-      </div>
-
-      <div class="space-y-4 flex-col items-start mx-auto text-left mt-12">
+    <FormulateForm
+      v-slot="{ isValid }"
+      v-model="formData"
+      class="login-form"
+      @submit="submitHandler"
+    >
+      <div class="space-y-4 flex-col items-start mx-auto text-left mt-8">
         <div class="px-4 py-5 sm:p-6">
+          <div
+            class="space-y-2 max-w-fit flex-col items-start options-container relative mb-12"
+          >
+            <FormulateInput
+              v-for="option in options"
+              :key="option.text"
+              name="selectedOption"
+              class=""
+              type="radio"
+              validation="required"
+              errors-class="absolute -bottom-6 text-red-700"
+              :validation-messages="{
+                required: 'Please let us know if you think you can come.',
+              }"
+            >
+              <template #element>
+                <div
+                  class="flex items-end min-h-64 font-serif py-4 cursor-pointer sm:flex focus:outline-none"
+                  @click="selectOption(option)"
+                >
+                  <div
+                    class="w-8 border-b-2 border-b-black h-full mr-2 relative flex justify-center"
+                  >
+                    <span
+                      class="response text-lg font-bold"
+                      :class="{
+                        active: formData.selectedOption == option.number,
+                      }"
+                      >X</span
+                    >
+                  </div>
+                  <div class="text-base">
+                    <p
+                      class="rsvp-option font-medium text-gray-900 leading-4 text-left"
+                      :class="{
+                        active: formData.selectedOption == option.number,
+                      }"
+                    >
+                      {{ option.text }}
+                    </p>
+                  </div>
+                </div>
+              </template>
+            </FormulateInput>
+          </div>
           <div class="mt-5 md:mt-0">
             <div class="grid grid-cols-12 gap-6">
               <div class="col-span-12">
@@ -65,24 +61,19 @@
                   class="block text-base font-medium text-black"
                   >Email</label
                 >
-                <input
-                  id="email"
-                  v-model="formData.email"
-                  type="text"
+                <FormulateInput
+                  type="email"
                   name="email"
-                  autocomplete="email"
-                  class="mt-1 block w-full sm:text-base border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none autofill:bg-red-500"
+                  input-class="mt-1 block w-full sm:text-base border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none focus:ring-transparent"
+                  element-class="focus:ring-0"
+                  wrapper-class="focus:ring-0"
+                  errors-class="text-red-700 mt-2"
+                  validation="required|email"
+                  :validation-messages="{
+                    required: 'Please fill in your email address.',
+                  }"
                   @blur="handleEmail()"
                 />
-                <p
-                  v-if="
-                    ($v.formData.email.$invalid && $v.formData.email.$dirty) ||
-                    (uiState === 'submit clicked' && $v.formData.email.$invalid)
-                  "
-                  class="text-red-700 text-base mt-2"
-                >
-                  This field is required.
-                </p>
               </div>
 
               <div
@@ -92,13 +83,11 @@
                 <label for="city" class="block text-base font-medium text-black"
                   >First Name</label
                 >
-                <input
-                  id="firstName"
-                  v-model="formData.firstName"
+                <FormulateInput
                   type="text"
                   name="firstName"
-                  autocomplete="given-name"
-                  class="mt-1 block w-full sm:text-base border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
+                  input-class="mt-1 block w-full sm:text-base border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
+                  errors-class="text-red-700 mt-2"
                 />
               </div>
 
@@ -111,13 +100,11 @@
                   class="block text-base font-medium text-black"
                   >Last Name</label
                 >
-                <input
-                  id="lastName"
-                  v-model="formData.lastName"
+                <FormulateInput
                   type="text"
                   name="lastName"
-                  autocomplete="family-name"
-                  class="mt-1 block w-full sm:text-base border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
+                  input-class="mt-1 block w-full sm:text-base border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
+                  errors-class="text-red-700 mt-2"
                 />
               </div>
 
@@ -127,26 +114,16 @@
                   class="block text-base font-medium text-black"
                   >Street address</label
                 >
-                <input
-                  id="street-address"
-                  v-model="formData.streetAddress"
+                <FormulateInput
                   type="text"
-                  name="street-address"
-                  autocomplete="street-address"
-                  class="mt-1 block w-full sm:text-base border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
-                  @blur="$v.formData.streetAddress.$touch()"
+                  name="streetAddress"
+                  input-class="mt-1 block w-full sm:text-base border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
+                  errors-class="text-red-700 mt-2"
+                  validation="required"
+                  :validation-messages="{
+                    required: 'Please fill in your street address.',
+                  }"
                 />
-                <p
-                  v-if="
-                    ($v.formData.streetAddress.$invalid &&
-                      $v.formData.streetAddress.$dirty) ||
-                    (uiState === 'submit clicked' &&
-                      $v.formData.streetAddress.$invalid)
-                  "
-                  class="text-red-700 text-base mt-2"
-                >
-                  This field is required.
-                </p>
               </div>
 
               <div class="col-span-12">
@@ -155,13 +132,11 @@
                   class="block text-base font-medium text-black"
                   >Street address 2</label
                 >
-                <input
-                  id="street-address-2"
-                  v-model="formData.streetAddress2"
+                <FormulateInput
                   type="text"
-                  name="street-address-2"
-                  autocomplete="street-address-2"
-                  class="mt-1 block w-full sm:text-base border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
+                  name="streetAddress2"
+                  input-class="mt-1 block w-full sm:text-base border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
+                  errors-class="text-red-700 mt-2"
                 />
               </div>
 
@@ -169,24 +144,16 @@
                 <label for="city" class="block text-base font-medium text-black"
                   >City</label
                 >
-                <input
-                  id="city"
-                  v-model="formData.city"
+                <FormulateInput
                   type="text"
                   name="city"
-                  autocomplete="address-level2"
-                  class="mt-1 block w-full sm:text-base border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
-                  @blur="$v.formData.city.$touch()"
+                  input-class="mt-1 block w-full sm:text-base border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
+                  errors-class="text-red-700 mt-2"
+                  validation="required"
+                  :validation-messages="{
+                    required: 'Please fill in your city.',
+                  }"
                 />
-                <p
-                  v-if="
-                    ($v.formData.city.$invalid && $v.formData.city.$dirty) ||
-                    (uiState === 'submit clicked' && $v.formData.city.$invalid)
-                  "
-                  class="text-red-700 text-base mt-2"
-                >
-                  This field is required.
-                </p>
               </div>
 
               <div class="col-span-12 sm:col-span-6 lg:col-span-4">
@@ -195,26 +162,13 @@
                   class="block text-base font-medium text-black"
                   >State / Province</label
                 >
-                <input
-                  id="region"
-                  v-model="formData.region"
+                <FormulateInput
                   type="text"
                   name="region"
-                  autocomplete="address-level1"
-                  class="mt-1 block w-full sm:text-base border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
-                  @blur="$v.formData.region.$touch()"
+                  input-class="mt-1 block w-full sm:text-base border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
+                  errors-class="text-red-700 mt-2"
+                  validation="required"
                 />
-                <p
-                  v-if="
-                    ($v.formData.region.$invalid &&
-                      $v.formData.region.$dirty) ||
-                    (uiState === 'submit clicked' &&
-                      $v.formData.region.$invalid)
-                  "
-                  class="text-red-700 text-base mt-2"
-                >
-                  This field is required.
-                </p>
               </div>
 
               <div class="col-span-12 sm:col-span-6 lg:col-span-4">
@@ -223,148 +177,94 @@
                   class="block text-base font-medium text-black"
                   >ZIP / Postal code</label
                 >
-                <input
-                  id="postal-code"
-                  v-model="formData.postalCode"
+                <FormulateInput
                   type="text"
-                  name="postal-code"
-                  autocomplete="postal-code"
-                  class="mt-1 block w-full sm:text-base border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
-                  @blur="$v.formData.postalCode.$touch()"
+                  name="postalCode"
+                  input-class="mt-1 block w-full sm:text-base border-b-2 border-b-black bg-sage focus:ring-0 focus:border-none"
+                  errors-class="text-red-700 mt-2"
+                  validation="required"
+                  :validation-messages="{
+                    required: 'Please fill in your postal code',
+                  }"
                 />
-                <p
-                  v-if="
-                    ($v.formData.postalCode.$invalid &&
-                      $v.formData.postalCode.$dirty) ||
-                    (uiState === 'submit clicked' &&
-                      $v.formData.postalCode.$invalid)
-                  "
-                  class="text-red-700 text-base mt-2"
-                >
-                  This field is required.
-                </p>
               </div>
 
               <div class="col-span-12">
-                <label
-                  for="country"
-                  class="block text-base font-medium text-black"
-                  >Country</label
-                >
-                <select
-                  id="country"
-                  v-model="$v.formData.country.$model"
+                <FormulateInput
                   name="country"
-                  autocomplete="country-name"
-                  class="mt-1 block w-full py-2 px-3 border border-b-black focus:outline-none sm:text-base bg-sage focus:ring-0 focus:border-none"
-                >
-                  <option :value="null" disabled>Select Country</option>
-                  <option>United States</option>
-                  <option>Germany</option>
-                </select>
-                <p
-                  v-if="
-                    ($v.formData.country.$invalid &&
-                      $v.formData.country.$dirty) ||
-                    (uiState === 'submit clicked' &&
-                      $v.formData.country.$invalid)
-                  "
-                  class="text-red-700 text-base mt-2"
-                >
-                  This field is required.
-                </p>
+                  label="Country"
+                  :options="['United States', 'Germany']"
+                  type="select"
+                  placeholder="Select country"
+                  input-class="mt-1 block w-full py-2 px-3 border border-b-black focus:outline-none sm:text-base bg-sage focus:ring-0 focus:border-none"
+                  validation="required"
+                  errors-class="text-red-700 mt-2"
+                  :validation-messages="{
+                    required: 'Please select your street country.',
+                  }"
+                />
               </div>
             </div>
           </div>
         </div>
 
         <div class="submit-container">
-          <div
-            v-if="uiState === 'submit clicked' && $v.$invalid"
-            class="rounded-md bg-red-200 p-4"
+          <FormulateInput
+            type="submit"
+            name="Submit this form!"
+            input-class="w-full"
           >
-            <div class="flex">
-              <div class="flex-shrink-0">
-                <svg
-                  class="h-5 w-5 text-red-800"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-              </div>
-
-              <div class="ml-3">
-                <div class="text-base text-red-800">
-                  <p>
-                    Oops! Looks like you missed something above. Make sure you
-                    filled out the whole form.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <button
-            v-if="!isLoading"
-            type="button"
-            class="w-full inline-flex items-center justify-center my-4 px-4 py-4 border border-transparent text-base font-medium text-white bg-black text-center hover:bg-gray-900"
-            :class="{
-              'bg-gray-600 text-black hover:bg-gray-600': !ableToSubmit,
-            }"
-            :loading="isLoading"
-            @click.prevent="submitForm"
-          >
-            {{
-              ableToSubmit
-                ? 'Submit'
-                : 'Please fill out the requested information'
-            }}
-          </button>
-          <button
-            v-else
-            type="button"
-            class="w-full inline-flex items-center justify-center my-4 px-4 py-4 border border-transparent text-base font-medium bg-black text-white"
-            :loading="isLoading"
-            disabled
-            @click.prevent="submitForm"
-          >
-            <svg
-              class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
+            <button
+              v-if="!isLoading"
+              type="button"
+              class="w-full inline-flex items-center justify-center my-4 px-4 py-4 border border-transparent text-base font-medium text-white bg-black text-center hover:bg-gray-900"
+              :class="{
+                'bg-gray-600 text-black hover:bg-gray-600': !isValid,
+              }"
+              :loading="isLoading"
             >
-              <circle
-                class="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                stroke-width="4"
-              ></circle>
-              <path
-                class="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              ></path>
-            </svg>
-            Processing...
-          </button>
+              {{
+                isValid ? 'Submit' : 'Please fill out the requested information'
+              }}
+            </button>
+            <button
+              v-else
+              type="button"
+              class="w-full inline-flex items-center justify-center my-4 px-4 py-4 border border-transparent text-base font-medium bg-black text-white"
+              :loading="isLoading"
+              disabled
+            >
+              <svg
+                class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  class="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                ></circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+              Processing...
+            </button>
+          </FormulateInput>
         </div>
       </div>
-    </form>
+    </FormulateForm>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import { required, minLength, email } from 'vuelidate/lib/validators'
 
 export default {
   data() {
@@ -413,69 +313,10 @@ export default {
       existingGuest: null,
     }
   },
-  validations: {
-    formData: {
-      selectedOption: {
-        required,
-        $autoDirty: true,
-        $lazy: true,
-      },
-      email: {
-        required,
-        minLength: minLength(2),
-        $lazy: true,
-        $autoDirty: true,
-        email,
-      },
-      firstName: {
-        $autoDirty: true,
-        $lazy: true,
-      },
-      lastName: {
-        $autoDirty: true,
-        $lazy: true,
-      },
-      streetAddress: {
-        required,
-        minLength: minLength(2),
-        $lazy: true,
-        $autoDirty: true,
-      },
-      streetAddress2: {},
-      city: {
-        required,
-        $lazy: true,
-        $autoDirty: true,
-      },
-      region: {
-        required,
-        minLength: minLength(2),
-        $lazy: true,
-        $autoDirty: true,
-      },
-      postalCode: {
-        required,
-        minLength: minLength(2),
-        $lazy: true,
-        $autoDirty: true,
-      },
-      country: {
-        required,
-        $lazy: true,
-        $autoDirty: true,
-      },
-    },
-  },
   computed: {
-    formTouched() {
-      return !this.$v.formData.$anyDirty
-    },
-    ableToSubmit() {
-      return !this.errors && !this.$v.$invalid
-    },
     endpoint() {
-      // return 'https://rsvp-handler.plj.workers.dev'
-      return 'http://127.0.0.1:8787'
+      return 'https://rsvp-handler.plj.workers.dev'
+      // return 'http://127.0.0.1:8787'
     },
   },
   created() {
@@ -485,30 +326,29 @@ export default {
   },
   methods: {
     handleEmail() {
-      this.$v.formData.email.$touch()
+      // this.$v.formData.email.$touch()
       this.checkExistingGuest()
     },
     selectOption(option) {
       this.formData.selectedOption = option.number
     },
-    async submitForm() {
+    async submitHandler() {
       this.isLoading = true
       this.uiState = 'submit clicked'
-      if (this.$v.$invalid === false) {
-        // this is where you send the responses
 
-        const data = JSON.stringify(this.formData)
+      // this is where you send the responses
 
-        try {
-          const response = await axios.post(this.endpoint, data)
-          this.posts = response.data
-          this.$router.push({ path: '/thank-you' })
-        } catch (e) {
-          this.errors.push(e)
-        }
-        this.isLoading = false
-        this.uiState = 'form submitted'
+      const data = JSON.stringify(this.formData)
+
+      try {
+        const response = await axios.post(this.endpoint, data)
+        this.posts = response.data
+        this.$router.push({ path: '/thank-you' })
+      } catch (e) {
+        this.errors.push(e)
       }
+      this.isLoading = false
+      this.uiState = 'form submitted'
     },
     async checkExistingResponse() {
       this.formData.email = this.$route.query.email
@@ -528,19 +368,17 @@ export default {
       }
     },
     async checkExistingGuest() {
-      if (!this.$v.formData.email.$invalid) {
-        const data = { email: this.formData.email }
+      const data = { email: this.formData.email }
 
-        const dj = JSON.stringify(data)
+      const dj = JSON.stringify(data)
 
-        try {
-          const response = await axios.post(this.endpoint + '/guest', dj)
-          // console.log(response)
+      try {
+        const response = await axios.post(this.endpoint + '/guest', dj)
+        // console.log(response)
 
-          this.existingGuest = response.data
-        } catch (e) {
-          this.errors.push(e)
-        }
+        this.existingGuest = response.data
+      } catch (e) {
+        this.errors.push(e)
       }
     },
   },
@@ -563,7 +401,7 @@ export default {
 }
 
 .options-container {
-  min-width: 386px;
+  min-width: 507px;
 }
 
 .border-b-black {
@@ -577,8 +415,8 @@ export default {
   }
 }
 
-.min-h-30 {
-  min-height: 32px;
+.min-h-64 {
+  min-height: 64px;
 }
 
 .max-w-fit {
