@@ -9,7 +9,8 @@
           <p
             class="mt-3 max-w-md mx-auto text-base text-black sm:text-lg md:mt-5 md:text-xl md:max-w-3xl font-decorative"
           >
-            We received your response. Stay tuned for more updates!
+            We received your response! Invitations and Wedding Website to
+            follow.
           </p>
         </div>
       </div>
