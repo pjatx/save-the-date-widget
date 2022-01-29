@@ -22,7 +22,16 @@
           </h2>
           <div class="border-b-black w-8 mx-auto mt-2 mb-3"></div>
           <p class="font-decorative uppercase text-sm leading-relaxed">
-            Douro Valley<br />Portugal
+            <span
+              v-if="$route.query.email && $route.query.email.includes('.de')"
+              ><a
+                target="_blank"
+                class="underline"
+                href="https://www.sixsenses.com/en/resorts/douro-valley"
+                >Six Senses,</a
+              ></span
+            >
+            <span> Douro Valley<br />Portugal</span>
           </p>
           <div class="mt-16">
             <h2 class="text-2xl font-bold">
