@@ -23,7 +23,11 @@
           <div class="border-b-black w-8 mx-auto mt-2 mb-3"></div>
           <p class="font-decorative uppercase text-sm leading-relaxed">
             <span
-              v-if="$route.query.email && $route.query.email.includes('.de')"
+              v-if="
+                $route.query.email &&
+                ($route.query.email.includes('.de') ||
+                  showHotelEmails.includes($route.query.email))
+              "
               ><a
                 target="_blank"
                 class="underline"
@@ -60,6 +64,11 @@ export default {
   name: 'IndexPage',
   components: {
     RSVPIntent,
+  },
+  data() {
+    return {
+      showHotelEmails: ['wemckay@sbcglobal.net'],
+    }
   },
 }
 </script>
