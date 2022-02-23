@@ -67,7 +67,7 @@ export default {
   },
   data() {
     return {
-      showHotelEmails: ['wemckay@sbcglobal.net'],
+      showHotelEmails: ['wemckay@sbcglobal.net', 'billmckay@mac.com'],
     }
   },
 }
